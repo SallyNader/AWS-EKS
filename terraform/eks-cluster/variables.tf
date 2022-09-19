@@ -8,7 +8,6 @@ variable "bastion_id" {}
 variable "cluster_name" {}
 variable "template_name" {}
 variable "instance_type" {}
-variable "user_data_file" {}
 variable "node_group_name" {}
 variable "desired_capacity" {}
 variable "subnets_ids" {

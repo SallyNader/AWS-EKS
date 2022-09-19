@@ -39,7 +39,6 @@ module "eks-cluster" {
   template_name       = "linux-eks-nodes"
   image_id            = "ami-0022f774911c1d690"
   bastion_id          = module.bastion-host.sg-bastion
-  user_data_file      = "../bash/script.sh"
   subnets_ids          = module.vpc.private_subnets_id
 }
 
