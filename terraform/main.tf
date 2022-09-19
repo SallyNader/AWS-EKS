@@ -24,23 +24,7 @@ module "bastion-host" {
   image_id         = "ami-0022f774911c1d690"
 }
 
-module "eks-cluster" {
-  source              = "./eks-cluster"
-  nfs                 = module.nfs.efs
-  desired_capacity    = 2
-  max_size            = 4
-  min_size            = 2
-  key_name            = "ec2-ssh"
-  vpc_id              = module.vpc.vpc_main.id
-  cluster_subnets_ids = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
-  instance_type       = "t3.medium"
-  cluster_name        = "eks-cluster"
-  node_group_name     = "worker-nodes"
-  template_name       = "linux-eks-nodes"
-  image_id            = "ami-0022f774911c1d690"
-  bastion_id          = module.bastion-host.sg-bastion
-  subnets_ids          = module.vpc.private_subnets_id
-}
+
 
 terraform {
   backend "s3" {
