@@ -73,8 +73,8 @@ resource "aws_launch_template" "linux" {
   }
 }
 
-resource "aws_security_group" "bastion" {
-  name   = "bastion"
+resource "aws_security_group" "bastion2" {
+  name   = "bastion2"
   vpc_id = var.vpc_id
 
   ingress {
