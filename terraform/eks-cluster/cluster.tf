@@ -42,7 +42,7 @@ resource "aws_launch_template" "linux-eks-nodes" {
   instance_type        = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg-worker-node.id]
   key_name             = var.key_name
-  user_data = filebase64("./script.sh")
+  user_data = filebase64("${path.module}/script.sh")
 
   block_device_mappings {
     device_name = "/dev/sda1"
