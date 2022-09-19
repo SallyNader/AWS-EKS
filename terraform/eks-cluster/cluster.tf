@@ -18,7 +18,7 @@ resource "aws_eks_node_group" "worker-nodes" {
   subnet_ids      = var.subnets_ids
 
   launch_template {
-    id      = aws_launch_template.linux-eks-nodes.id
+    id      = aws_launch_template.linux.id
     version = "$Latest"
   }
 
@@ -36,29 +36,76 @@ resource "aws_eks_node_group" "worker-nodes" {
   ]
 }
 
-resource "aws_launch_template" "linux-eks-nodes" {
-  name                 = var.template_name
-  image_id             = var.image_id
-  instance_type        = var.instance_type
-  vpc_security_group_ids = [aws_security_group.sg-worker-node.id]
-  key_name             = var.key_name
-  user_data = filebase64("${path.module}/script.sh")
+# resource "aws_launch_template" "linux-eks-nodes" {
+#   name                 = var.template_name
+#   image_id             = var.image_id
+#   instance_type        = var.instance_type
+#   vpc_security_group_ids = [aws_security_group.sg-worker-node.id]
+#   key_name             = var.key_name
+#   user_data = filebase64("${path.module}/script.sh")
 
-  block_device_mappings {
-    device_name = "/dev/sda1"
+#   block_device_mappings {
+#     device_name = "/dev/sda1"
 
-    ebs {
-      volume_size = 20
-    }
-  }
+#     ebs {
+#       volume_size = 20
+#     }
+#   }
+#   tags = {
+#     template_terraform = var.template_name
+#   }
+
+#   depends_on = [
+#     var.nfs
+#   ]
+# }
+
+# Creates auto scaling group for basion host on maltiple AZ.
+resource "aws_launch_template" "linux" {
+  name                   = var.template_name
+  image_id               = var.image_id
+  instance_type          = var.instance_type
+  vpc_security_group_ids = [aws_security_group.bastion.id]
+  key_name               = var.key
+
   tags = {
     template_terraform = var.template_name
   }
-
-  depends_on = [
-    var.nfs
-  ]
 }
+
+resource "aws_security_group" "bastion" {
+  name   = "bastion"
+  vpc_id = var.vpc_id
+
+  ingress {
+    description = "Allow ssh from everywhere"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow http from everywhere"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "sg-bastion"
+  }
+}
+
+
 
 
 resource "aws_security_group" "sg-worker-node" {
