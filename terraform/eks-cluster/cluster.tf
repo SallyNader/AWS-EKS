@@ -66,7 +66,7 @@ resource "aws_launch_template" "linux" {
   image_id               = var.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.bastion.id]
-  key_name               = var.key
+  key_name               = var.key_name
 
   tags = {
     template_terraform = var.template_name
