@@ -7,7 +7,10 @@ variable "vpc_id" {}
 # variable "bastion_id" {}
 variable "cluster_name" {}
 # variable "template_name" {}
-variable "instance_types" {}
+variable "instance_types" {
+  type = list(string)
+  default = ["t3.medium"]
+}
 variable "node_group_name" {}
 variable "nodes_sg_name" {}
 variable "cluster_sg_name" {}
