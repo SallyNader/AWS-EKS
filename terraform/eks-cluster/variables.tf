@@ -19,9 +19,9 @@ variable "disk_size" {
   
 }
 
-variable "cluster_subnets_ids" {
-  type = list(string)
-}
+# variable "cluster_subnets_ids" {
+#   type = list(string)
+# }
 variable "cluster_subnet_ids" {
   type = list(string)
 }
