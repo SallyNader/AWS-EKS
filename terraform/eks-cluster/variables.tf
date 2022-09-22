@@ -7,7 +7,7 @@ variable "vpc_id" {}
 # variable "bastion_id" {}
 variable "cluster_name" {}
 # variable "template_name" {}
-variable "instance_type" {}
+variable "instance_types" {}
 variable "node_group_name" {}
 variable "nodes_sg_name" {}
 variable "cluster_sg_name" {}
@@ -22,7 +22,7 @@ variable "disk_size" {
 variable "cluster_subnets_ids" {
   type = list(string)
 }
-variable "eks_cluster_subnet_ids" {
+variable "cluster_subnet_ids" {
   type = list(string)
 }
 variable "public_subnet_ids" {
