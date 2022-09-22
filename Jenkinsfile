@@ -11,6 +11,7 @@ pipeline {
         DYNAMODB_NAME = "eks-tf-state"
         S3_BUCKET_NAME = "eks-tf-s3-state"
         KMS_ALIAS = "alias/terraform-bucker"
+        CLUSTER_NAME = "udacity"
     }
 
     stages {
@@ -36,7 +37,7 @@ pipeline {
                         sh '''
                             terraform init
 
-                            terraform apply -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve
+                            terraform apply -var="cluster_name=${CLUSTER_NAME}" -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve
                         '''
                     }
 
