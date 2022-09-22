@@ -14,6 +14,7 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name = "vpc_main"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -26,6 +27,8 @@ resource "aws_subnet" "public-subnet" {
   availability_zone       = each.key
   tags = {
     Name = "public-${each.key}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/elb" = 1
   }
 }
 
@@ -40,5 +43,7 @@ resource "aws_subnet" "private-subnet" {
 
   tags = {
     Name = "private-${each.key}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb" = 1
   }
 }

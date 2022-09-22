@@ -1,0 +1,40 @@
+- name: Deploy node app
+  hosts: localhost
+  tasks:
+    # - name: Ensures python3 is installed
+    #   become: yes
+    #   ansible.builtin.package:
+    #     name:
+    #       - python3
+    #       - python3-pip
+    #     state: present
+
+    # - name: Installs kubernetes pip package
+    #   become: yes
+    #   pip:
+    #     name: kubernetes
+    #     state: present
+        
+    - name: Finds kubernetes files
+      find:
+        paths: "../node-app/kubernetes/"
+        file_type: file
+        recurse: yes
+        patterns:
+          - "*.yaml"
+      register: configfiles
+
+    - name: Creates node app
+      kubernetes.core.k8s:
+        state: present
+        namespace: default
+        api_version: v1
+        src: "{{ item.path }}"
+      with_items:
+        - "{{ configfiles.files  }}"
+
+
+    # - name: "list log files"
+    #   debug:
+    #     var: item.path
+    #   with_items: "{{ configfiles.files }}"    
