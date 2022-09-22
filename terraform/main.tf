@@ -33,7 +33,7 @@ module "eks-cluster" {
   nodes_sg_name = "${var.cluster_name}-node-sg"
   cluster_subnet_ids = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
   vpc_id           = module.vpc.vpc_main.id
-instance_types = ["t3.medium"]
+instance_types = ["t2.micro"]
  # Node group configuration (including autoscaling configurations)
     pvt_desired_size = 2
     ami_type = "AL2_x86_64"
