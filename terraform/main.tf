@@ -28,8 +28,8 @@ module "eks-cluster" {
   source              = "./eks-cluster"
   # nfs                 = module.nfs.efs
   cluster_name = "new-cluster"
-  cluster_sg_name = "${var.cluster_name}-cluster-sg"
-  nodes_sg_name = "${var.cluster_name}-node-sg"
+  cluster_sg_name = "new-cluster-sg"
+  nodes_sg_name = "new-node-sg"
   cluster_subnet_ids = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
   vpc_id           = module.vpc.vpc_main.id
 instance_types = "t3.medium"
@@ -42,7 +42,7 @@ instance_types = "t3.medium"
     pblc_desired_size = 1
     pblc_max_size = 2
     pblc_min_size = 1
-    node_group_name = "${var.cluster_name}-node-group"
+    node_group_name = "new-node-group"
     private_subnet_ids = module.vpc.private_subnets_id
     public_subnet_ids = module.vpc.public_subnets_id
 }
