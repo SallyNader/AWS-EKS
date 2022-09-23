@@ -5,11 +5,13 @@ resource "aws_eks_node_group" "main" {
   node_role_arn   = aws_iam_role.eks_nodes.arn
   subnet_ids      = var.private_subnet_ids
 
-  launch_template {
-    id      = aws_launch_template.linux-eks-nodes.id
-    version = "$Latest"
-  }
+  ami_type       = var.ami_type
+  disk_size      = var.disk_size
+  instance_types = var.instance_types
 
+ remote_access {
+    ec2_ssh_key = var.key_name
+  }
   scaling_config {
     desired_size = var.pvt_desired_size
     max_size     = var.pvt_max_size
@@ -36,11 +38,13 @@ resource "aws_eks_node_group" "public" {
   node_role_arn   = aws_iam_role.eks_nodes.arn
   subnet_ids      = var.public_subnet_ids
 
-  launch_template {
-    id      = aws_launch_template.linux-eks-nodes.id
-    version = "$Latest"
-  }
+  ami_type       = var.ami_type
+  disk_size      = var.disk_size
+  instance_types = var.instance_types
 
+  remote_access {
+    ec2_ssh_key = var.key_name
+  }
   scaling_config {
     desired_size = var.pblc_desired_size
     max_size     = var.pblc_max_size
@@ -59,18 +63,3 @@ resource "aws_eks_node_group" "public" {
   ]
 }
 
-resource "aws_launch_template" "linux-eks-nodes" {
-  name          = "${var.node_group_name}-template"
-  image_id      = var.image_id
-  instance_type = var.instance_type
-  key_name      = var.key_name
-
-  user_data = filebase64("${path.module}/script.sh")
-  tags = {
-    template_terraform = "${var.node_group_name}-template"
-  }
-
-  depends_on = [
-    var.nfs
-  ]
-}

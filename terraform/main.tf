@@ -35,7 +35,6 @@ module "eks-cluster" {
   
   # Node group configuration (including autoscaling configurations)
   key_name           = "ec2-ssh"
-  image_id           = "ami-0022f774911c1d690"
   disk_size          = 30
   pvt_desired_size   = 1
   pvt_max_size       = 3
