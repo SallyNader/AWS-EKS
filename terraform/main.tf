@@ -51,8 +51,8 @@ module "eks-cluster" {
 terraform {
   backend "s3" {
     key            = "terraform/key"
-    bucket         = var.bucket
+    bucket         = "eks-tf-s3-state3"
     region         = "us-east-1"
-    dynamodb_table = var.dynamodb_name
+    dynamodb_table = "eks-tf-state3"
   }
 }
