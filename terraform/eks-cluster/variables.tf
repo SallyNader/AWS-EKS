@@ -2,7 +2,6 @@ variable "nfs" {}
 variable "vpc_id" {}
 # variable "image_id" {}
 variable "key_name" {}
-variable "disk_size" {}
 variable "pvt_max_size" {}
 variable "pvt_min_size" {}
 variable "cluster_name" {}
