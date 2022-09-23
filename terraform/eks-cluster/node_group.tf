@@ -9,10 +9,6 @@ resource "aws_eks_node_group" "main" {
     id      = aws_launch_template.linux-eks-nodes.id
     version = "$Latest"
   }
-  disk_size = var.disk_size
-
-  # ami_type       = var.ami_type
-  # instance_types = var.instance_types
 
   scaling_config {
     desired_size = var.pvt_desired_size
@@ -44,9 +40,6 @@ resource "aws_eks_node_group" "public" {
     id      = aws_launch_template.linux-eks-nodes.id
     version = "$Latest"
   }
-  # ami_type       = var.ami_type
-  disk_size = var.disk_size
-  # instance_types = var.instance_types
 
   scaling_config {
     desired_size = var.pblc_desired_size
