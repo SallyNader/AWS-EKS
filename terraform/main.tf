@@ -10,19 +10,6 @@ module "nfs" {
   subnet_ids  = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
 }
 
-module "bastion-host" {
-  source           = "./bastion"
-  desired_capacity = 3
-  max_size         = 4
-  min_size         = 3
-  key              = "ec2-ssh"
-  template_name    = "linux"
-  subnets_ids      = module.vpc.public_subnets_id
-  vpc_id           = module.vpc.vpc_main.id
-  instance_type    = "t2.micro"
-  image_id         = "ami-0022f774911c1d690"
-}
-
 module "eks-cluster" {
   source             = "./eks-cluster"
   nfs                = module.nfs.efs

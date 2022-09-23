@@ -9,7 +9,7 @@ resource "aws_eks_node_group" "main" {
   disk_size      = var.disk_size
   instance_types = var.instance_types
 
- remote_access {
+  remote_access {
     ec2_ssh_key = var.key_name
   }
   scaling_config {

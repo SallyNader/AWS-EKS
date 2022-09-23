@@ -51,7 +51,7 @@ pipeline {
                     // Transfers project files to bastion host to be sharable among all instances via nfs.
                     sh '''
                         chmod 400 ${KEY_NAME}.pem
-                        scp -o StrictHostKeyChecking=no-rp -i ${KEY_NAME}.pem $WORKSPACE ec2-user@${BASTION_HOST_IP}: /home/ec2-user/
+                        scp -o StrictHostKeyChecking=no -rp -i ${KEY_NAME}.pem $WORKSPACE ec2-user@${BASTION_HOST_IP}: /home/ec2-user/
                     '''
                 }
             }
