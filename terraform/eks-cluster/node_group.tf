@@ -72,7 +72,7 @@ resource "aws_launch_template" "linux-eks-nodes" {
   instance_type = var.instance_type
   key_name      = var.key_name
 
-
+  user_data = filebase64("${path.module}/script.sh")
   tags = {
     template_terraform = "${var.node_group_name}-template"
   }
