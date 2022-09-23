@@ -31,7 +31,7 @@ module "eks-cluster" {
   nodes_sg_name      = "${var.cluster_name}-node-sg"
   cluster_subnet_ids = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
   vpc_id             = module.vpc.vpc_main.id
-  instance_type      = "t2.micro"
+  instance_types      = ["t2.micro"]
   
   # Node group configuration (including autoscaling configurations)
   key_name           = "ec2-ssh"
