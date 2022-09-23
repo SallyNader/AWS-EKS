@@ -38,7 +38,7 @@ module "eks-cluster" {
   disk_size          = 30
   pvt_desired_size   = 1
   pvt_max_size       = 3
-  pvt_min_size       = 2
+  pvt_min_size       = 1
   pblc_desired_size  = 1
   pblc_max_size      = 2
   pblc_min_size      = 1
