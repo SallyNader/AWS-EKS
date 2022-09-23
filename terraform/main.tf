@@ -1,8 +1,6 @@
 module "vpc" {
   source         = "./vpc"
   cluster_name   = var.cluster_name
-  aws_access_key = var.aws_access_key
-  aws_secret_key = var.aws_secret_key
 }
 
 module "nfs" {
