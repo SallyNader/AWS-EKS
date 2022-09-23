@@ -8,9 +8,9 @@ pipeline {
         KEY_NAME = "ec2-ssh"
         S3_KEY = "key"
         HASH_KEY = "LockID"
-        DYNAMODB_NAME = "eks-tf-state"
-        S3_BUCKET_NAME = "eks-tf-s3-state"
-        KMS_ALIAS = "alias/terraform-bucket"
+        DYNAMODB_NAME = "eks-tf-state2"
+        S3_BUCKET_NAME = "eks-tf-s3-state2"
+        KMS_ALIAS = "alias/terraform-bucket-2"
         CLUSTER_NAME = "udacity"
     }
 
