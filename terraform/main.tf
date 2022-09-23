@@ -1,6 +1,6 @@
 module "vpc" {
   source         = "./vpc"
-  cluster_name = var.cluster_name
+  cluster_name   = var.cluster_name
   aws_access_key = var.aws_access_key
   aws_secret_key = var.aws_secret_key
 }
@@ -26,26 +26,28 @@ module "bastion-host" {
 }
 
 module "eks-cluster" {
-  source              = "./eks-cluster"
-  # nfs                 = module.nfs.efs
-  cluster_name = "${var.cluster_name}"
-  cluster_sg_name = "${var.cluster_name}-cluster-sg"
-  nodes_sg_name = "${var.cluster_name}-node-sg"
+  source             = "./eks-cluster"
+  nfs                = module.nfs.efs
+  cluster_name       = var.cluster_name
+  cluster_sg_name    = "${var.cluster_name}-cluster-sg"
+  nodes_sg_name      = "${var.cluster_name}-node-sg"
   cluster_subnet_ids = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
-  vpc_id           = module.vpc.vpc_main.id
-instance_types = ["t2.micro"]
- # Node group configuration (including autoscaling configurations)
-    pvt_desired_size = 2
-    ami_type = "AL2_x86_64"
-    disk_size = 30
-    pvt_max_size = 3
-    pvt_min_size = 2
-    pblc_desired_size = 1
-    pblc_max_size = 2
-    pblc_min_size = 1
-    node_group_name = "${var.cluster_name}-node-group"
-    private_subnet_ids = module.vpc.private_subnets_id
-    public_subnet_ids = module.vpc.public_subnets_id
+  vpc_id             = module.vpc.vpc_main.id
+  instance_type      = "t2.micro"
+  
+  # Node group configuration (including autoscaling configurations)
+  key_name           = "ec2-ssh"
+  image_id           = "ami-0022f774911c1d690"
+  disk_size          = 30
+  pvt_desired_size   = 1
+  pvt_max_size       = 3
+  pvt_min_size       = 2
+  pblc_desired_size  = 1
+  pblc_max_size      = 2
+  pblc_min_size      = 1
+  node_group_name    = "${var.cluster_name}-node-group"
+  private_subnet_ids = module.vpc.private_subnets_id
+  public_subnet_ids  = module.vpc.public_subnets_id
 }
 
 terraform {

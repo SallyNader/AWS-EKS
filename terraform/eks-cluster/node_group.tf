@@ -5,9 +5,14 @@ resource "aws_eks_node_group" "main" {
   node_role_arn   = aws_iam_role.eks_nodes.arn
   subnet_ids      = var.private_subnet_ids
 
-  ami_type       = var.ami_type
-  disk_size      = var.disk_size
-  instance_types = var.instance_types
+  launch_template {
+    id      = aws_launch_template.linux-eks-nodes.id
+    version = "$Latest"
+  }
+  disk_size = var.disk_size
+
+  # ami_type       = var.ami_type
+  # instance_types = var.instance_types
 
   scaling_config {
     desired_size = var.pvt_desired_size
@@ -16,13 +21,15 @@ resource "aws_eks_node_group" "main" {
   }
 
   tags = {
-    Name = var.node_group_name
+    Name = "${var.node_group_name}-private"
+
   }
 
   depends_on = [
     aws_iam_role_policy_attachment.aws_eks_worker_node_policy,
     aws_iam_role_policy_attachment.aws_eks_cni_policy,
     aws_iam_role_policy_attachment.ec2_read_only,
+    var.nfs
   ]
 }
 
@@ -33,9 +40,13 @@ resource "aws_eks_node_group" "public" {
   node_role_arn   = aws_iam_role.eks_nodes.arn
   subnet_ids      = var.public_subnet_ids
 
-  ami_type       = var.ami_type
-  disk_size      = var.disk_size
-  instance_types = var.instance_types
+  launch_template {
+    id      = aws_launch_template.linux-eks-nodes.id
+    version = "$Latest"
+  }
+  # ami_type       = var.ami_type
+  disk_size = var.disk_size
+  # instance_types = var.instance_types
 
   scaling_config {
     desired_size = var.pblc_desired_size
@@ -51,5 +62,22 @@ resource "aws_eks_node_group" "public" {
     aws_iam_role_policy_attachment.aws_eks_worker_node_policy,
     aws_iam_role_policy_attachment.aws_eks_cni_policy,
     aws_iam_role_policy_attachment.ec2_read_only,
+    var.nfs
+  ]
+}
+
+resource "aws_launch_template" "linux-eks-nodes" {
+  name          = "${var.node_group_name}-template"
+  image_id      = var.image_id
+  instance_type = var.instance_type
+  key_name      = var.key_name
+
+
+  tags = {
+    template_terraform = "${var.node_group_name}-template"
+  }
+
+  depends_on = [
+    var.nfs
   ]
 }
