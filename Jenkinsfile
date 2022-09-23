@@ -38,7 +38,7 @@ pipeline {
                         sh '''
                             terraform init
 
-                            terraform apply -var="cluster_name=${CLUSTER_NAME}" -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve
+                            terraform apply -var="token=${AWS_TOKEN}" -var="cluster_name=${CLUSTER_NAME}" -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve
                         '''
                     }
 
