@@ -10,6 +10,17 @@ module "nfs" {
   subnet_ids  = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
 }
 
+module "elb" {
+  source = "./elb"
+  vpc_id =  module.vpc.vpc_main.id
+  elb_type = "network"
+  elb_name = "eks-app"
+  subnets_ids = module.vpc.public_subnets_id
+  elb_listener_port = 3000
+  target_group_name = ""
+  target_group_port= 3000
+}
+
 module "eks-cluster" {
   source             = "./eks-cluster"
   nfs                = module.nfs.efs

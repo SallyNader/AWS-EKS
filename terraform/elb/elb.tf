@@ -2,11 +2,11 @@
 resource "aws_lb" "web" {
   name               = var.elb_name
   internal           = false
-  load_balancer_type = var.lb_type
+  load_balancer_type = var.elb_type
 
   subnets = var.subnets_ids
   tags = {
-    nlb_terraform = "web"
+    nlb_terraform = var.elb_name
   }
 }
 
@@ -18,13 +18,13 @@ resource "aws_lb_target_group" "web" {
   protocol = "TCP"
   vpc_id   = var.vpc_id
   tags = {
-    target_group_terraform = "web"
+    target_group_terraform = var.target_group_name
   }
 }
 
 resource "aws_lb_listener" "web" {
   load_balancer_arn = aws_lb.web.arn
-  port              = var.lb_listener_port
+  port              = var.elb_listener_port
   protocol          = "TCP"
   default_action {
     type             = "forward"
