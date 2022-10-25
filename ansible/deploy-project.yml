@@ -1,23 +1,23 @@
 - name: Deploy node app
   hosts: localhost
   tasks:
-    # - name: Ensures python3 is installed
-    #   become: yes
-    #   ansible.builtin.package:
-    #     name:
-    #       - python3
-    #       - python3-pip
-    #     state: present
+    - name: Ensures python3 is installed
+      become: yes
+      ansible.builtin.package:
+        name:
+          - python3
+          - python3-pip
+        state: present
 
-    # - name: Installs kubernetes pip package
-    #   become: yes
-    #   pip:
-    #     name: kubernetes
-    #     state: present
-        
+    - name: Installs kubernetes pip package
+      become: yes
+      pip:
+        name: kubernetes
+        state: present
+
     - name: Finds kubernetes files
       find:
-        paths: "../node-app/kubernetes/"
+        paths: "/home/ec2-user/project/node-app/kubernetes/"
         file_type: file
         recurse: yes
         patterns:
@@ -29,12 +29,6 @@
         state: present
         namespace: default
         api_version: v1
-        src: "{{ item.path }}"
+        src: "{{ item }}"
       with_items:
-        - "{{ configfiles.files  }}"
-
-
-    # - name: "list log files"
-    #   debug:
-    #     var: item.path
-    #   with_items: "{{ configfiles.files }}"    
+        - "{{ configfiles.files | map(attribute='path')| list }}"
