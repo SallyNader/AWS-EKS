@@ -95,18 +95,19 @@ pipeline {
         failure {
             echo "Failed stage name: ${FAILED_STAGE}"
             echo "----------------------------------"
-
-            if (FAILED_STAGE == 'Create S3 Backend') {
-                dir("terraform/backend-state") {
-                    sh 'terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve'
-                }    
-           
-            }
-            if (FAILED_STAGE == 'Deploy Infrastructure') {
-                dir("terraform") {
-                    sh 'terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -var="cluster_name=${CLUSTER_NAME}" -auto-approve'
-                }    
-           
+            script {
+                if (FAILED_STAGE == 'Create S3 Backend') {
+                    dir("terraform/backend-state") {
+                        sh 'terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve'
+                    }    
+            
+                }
+                if (FAILED_STAGE == 'Deploy Infrastructure') {
+                    dir("terraform") {
+                        sh 'terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -var="cluster_name=${CLUSTER_NAME}" -auto-approve'
+                    }    
+            
+                }
             }
         }
     }
