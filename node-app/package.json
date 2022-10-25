@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "sonar": "node_modules/sonarqube-scanner/bin/sonarqube-scanner"
   },
   "author": "",
