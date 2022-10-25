@@ -1,3 +1,5 @@
+def FAILED_STAGE
+
 pipeline {
 
     agent any
