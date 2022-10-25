@@ -8,7 +8,7 @@ pipeline {
         AWS_ACCESS_KEY=credentials('AWS_ACCESS_KEY')
         AWS_SECRET_KEY=credentials('AWS_SECRET_ACCESS')
         //SONARQUBE_TOKEN = credentials('sonarqube_token')
-        // SONARQUBE_URL = 'http://localhost:9095'
+        // SONARQUBE_URL  = 'http://localhost:9095'
         CLUSTER_NAME = "EKS Cluster"
     }
 
