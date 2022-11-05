@@ -9,28 +9,30 @@ pipeline {
         AWS_SECRET_KEY = credentials('AWS_SECRET_ACCESS')
         //SONARQUBE_TOKEN = credentials('sonarqube_token')
         // SONARQUBE_URL  = 'http://localhost:9095'
-        CLUSTER_NAME = "EKS Cluster"
-        BUCKET_NAME = "S3-Backend"
+        CLUSTER_NAME = 'EKS Cluster'
+        KEY_PAIR = '/home/sally/Downloads/ec2-ssh.pem '
+        SSH_KEY = '~/.ssh/id_rsa.pub'
+        BUCKET_NAME = 'S3-Backend'
     }
 
     stages {
         stage("Build Code") {
             steps {
-                dir('node-app') {
+                dir('backend') {
                     sh "npm install"
                 }
             }
         }
         stage("Test Code") {
             steps {
-                dir('node-app') {
+                dir('backend') {
                     sh "npm run test"
                 }
             }
         }
         stage("Scan Code") {
             steps {
-                dir('node-app') {
+                dir('backend') {
                     sh "npm audit fix --audit-level=critical --force"
                 }
             }
@@ -91,6 +93,18 @@ pipeline {
             }
         }
 
+        stage("Deploy Code and Kubernetes Project") {
+            steps {
+                dir("ansible") {
+                    sh '''
+                        ansible-playbook deploy-code.yml -i inventory.txt --user ec2-user --key-file ${KEY_PAIR}  -e "key=${SSH_KEY}"
+                        ansible-playbook -i inventory.txt deploy-kubernetes.yml
+                    '''
+
+                }
+            }
+        }
+
     }
 
     post {
@@ -108,7 +122,7 @@ pipeline {
                     }    
             
                 }
-                if (FAILED_STAGE == 'Deploy Infrastructure') {
+                if (FAILED_STAGE == 'Deploy Infrastructure' || FAILED_STAGE == 'Deploy Code and Kubernetes Project') {
                     dir("terraform") {
                         sh 'terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -var="cluster_name=${CLUSTER_NAME}" -auto-approve'
                     }    

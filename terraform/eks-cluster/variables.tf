@@ -23,10 +23,9 @@ variable "disk_size" {
   default     = 20
 }
 
-variable "instance_types" {
-  type        = list(string)
-  default     = ["t3.medium"]
-  description = "Set of instance types associated with the EKS Node Group."
+variable "instance_type" {
+  type        = string
+  default     = "t2.micro"
 }
 
 variable "cluster_subnet_ids" {
