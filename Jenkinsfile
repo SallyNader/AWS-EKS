@@ -9,7 +9,7 @@ pipeline {
         AWS_SECRET_KEY = credentials('AWS_SECRET_ACCESS')
         //SONARQUBE_TOKEN = credentials('sonarqube_token')
         // SONARQUBE_URL  = 'http://localhost:9095'
-        CLUSTER_NAME = 'EKS Cluster'
+        CLUSTER_NAME = 'eks-cluster'
         KEY_PAIR = '/home/sally/Downloads/ec2-ssh.pem '
         SSH_KEY = '~/.ssh/id_rsa.pub'
         BUCKET_NAME = 's3--backend'
