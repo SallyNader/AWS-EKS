@@ -28,6 +28,11 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
+variable "instance_types" {
+  type        = list(string)
+  default     = ["t2.micro"]
+}
+
 variable "cluster_subnet_ids" {
   type = list(string)
 }
