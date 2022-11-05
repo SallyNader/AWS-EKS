@@ -1,6 +1,6 @@
 variable "nfs" {}
 variable "vpc_id" {}
-# variable "image_id" {}
+variable "user_data_file" {}
 variable "key_name" {}
 variable "pvt_max_size" {}
 variable "pvt_min_size" {}
