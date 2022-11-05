@@ -12,7 +12,7 @@ pipeline {
         CLUSTER_NAME = 'EKS Cluster'
         KEY_PAIR = '/home/sally/Downloads/ec2-ssh.pem '
         SSH_KEY = '~/.ssh/id_rsa.pub'
-        BUCKET_NAME = 'S3-Bucket-Backend'
+        BUCKET_NAME = 's3-backend'
     }
 
     stages {
