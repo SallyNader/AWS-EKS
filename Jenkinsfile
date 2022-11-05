@@ -116,7 +116,7 @@ pipeline {
                 if (FAILED_STAGE == 'Create S3 Backend') {
                     dir("terraform/backend-state") {
                         sh '''
-                            terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve
+                            terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -var="s3_bucket_name=${BUCKET_NAME}" -auto-approve
                         '''
                     }    
             
