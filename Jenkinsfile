@@ -116,7 +116,6 @@ pipeline {
                 if (FAILED_STAGE == 'Create S3 Backend') {
                     dir("terraform/backend-state") {
                         sh '''
-                            aws s3 rm s3://${BUCKET_NAME} --recursive
                             terraform destroy -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -auto-approve
                         '''
                     }    
