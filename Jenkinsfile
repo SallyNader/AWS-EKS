@@ -57,23 +57,23 @@ pipeline {
         //     }
         // }
 
-//         stage("Create S3 Backend") {
-//             steps {
-//                 script {
-//                     // Stores stage name to check it on failure.
-//                     FAILED_STAGE=env.STAGE_NAME
-//                 }
+        stage("Create S3 Backend") {
+            steps {
+                script {
+                    // Stores stage name to check it on failure.
+                    FAILED_STAGE=env.STAGE_NAME
+                }
 
-//                 dir("terraform/backend-state") {
-//                     sh '''
-//                         terraform init
+                dir("terraform/backend-state") {
+                    sh '''
+                        terraform init
 
-//                         terraform apply -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -var="s3_bucket_name=${BUCKET_NAME}" -auto-approve
-//                     '''
+                        terraform apply -var="aws_access_key=${AWS_ACCESS_KEY}" -var="aws_secret_key=${AWS_SECRET_KEY}" -var="s3_bucket_name=${BUCKET_NAME}" -auto-approve
+                    '''
 
-//                 }
-//             }
-//         }
+                }
+            }
+        }
         
         stage("Deploy Infrastructure") {
             steps {
