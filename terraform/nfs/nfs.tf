@@ -13,7 +13,7 @@ resource "aws_efs_file_system" "efs" {
 
 # Creating Mount target of EFS
 resource "aws_efs_mount_target" "mount" {
-  for_each                = var.subnet_ids
+  for_each                = toset(var.subnet_ids)
   file_system_id  = aws_efs_file_system.efs.id
   subnet_id       = each.value
   security_groups = [aws_security_group.nfs.id]
