@@ -26,7 +26,6 @@ resource "aws_eks_node_group" "private" {
     aws_iam_role_policy_attachment.aws_eks_cni_policy,
     aws_iam_role_policy_attachment.ec2_read_only,
     aws_launch_template.private_node_template,
-    var.nfs
   ]
 }
 
@@ -58,7 +57,6 @@ resource "aws_eks_node_group" "public" {
     aws_iam_role_policy_attachment.aws_eks_worker_node_policy,
     aws_iam_role_policy_attachment.aws_eks_cni_policy,
     aws_iam_role_policy_attachment.ec2_read_only,
-    var.nfs
   ]
 }
 
@@ -76,12 +74,8 @@ resource "aws_launch_template" "private_node_template" {
     }
   }
  
-  user_data = filebase64("${path.module}/script.sh")
 
   tags = {
     template_terraform = "private_node_template"
   }
-  depends_on = [
-    var.nfs
-  ]
 }

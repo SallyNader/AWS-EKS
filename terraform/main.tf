@@ -24,7 +24,6 @@ module "nfs" {
 
 module "eks-cluster" {
   source             = "./eks-cluster"
-  nfs                = module.nfs.efs
   cluster_name       = var.cluster_name
   cluster_sg_name    = "${var.cluster_name}-cluster-sg"
   nodes_sg_name      = "${var.cluster_name}-node-sg"

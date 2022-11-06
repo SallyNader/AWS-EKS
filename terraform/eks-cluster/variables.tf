@@ -1,4 +1,3 @@
-variable "nfs" {}
 variable "vpc_id" {}
 variable "user_data_file" {}
 variable "key_name" {}
