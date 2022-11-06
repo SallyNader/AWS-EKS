@@ -8,7 +8,7 @@ module "nfs" {
   vpc_id      = module.vpc.vpc_main.id
   user_data_file = "eks-cluster/script.sh"
   cidr_blocks = module.vpc.vpc_main.cidr_block
-  subnet_ids  = concat(module.vpc.public_subnets_id, module.vpc.private_subnets_id)
+  subnet_ids  =  module.vpc.private_subnets_id
 }
 
 # module "elb" {
