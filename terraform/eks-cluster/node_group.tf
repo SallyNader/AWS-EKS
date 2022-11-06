@@ -76,7 +76,7 @@ resource "aws_launch_template" "private_node_template" {
     }
   }
  
-  user_data = filebase64(var.user_data_file)
+  user_data = filebase64("${path.module}/script.sh")
 
   tags = {
     template_terraform = "private_node_template"
