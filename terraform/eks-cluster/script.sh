@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Install ansible on ec2.
-sudo yum update -y
-
-sudo amazon-linux-extras install ansible2 -y
-
 sudo mkdir /home/ec2-user/project
 
 # Mounts nfs.

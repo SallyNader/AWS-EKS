@@ -23,13 +23,13 @@ variable "disk_size" {
 }
 
 variable "instance_type" {
-  type        = string
-  default     = "t2.micro"
+  type    = string
+  default = "t2.micro"
 }
 
 variable "instance_types" {
-  type        = list(string)
-  default     = ["t2.micro"]
+  type    = list(string)
+  default = ["t2.micro"]
 }
 
 variable "cluster_subnet_ids" {

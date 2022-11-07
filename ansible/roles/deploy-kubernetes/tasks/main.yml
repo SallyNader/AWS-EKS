@@ -12,7 +12,7 @@
 
 - name: Finds kubernetes files
   find:
-    paths: "/home/ec2-user/AWS-EKS/kubernetes"
+    paths: "/home/ec2-user/project/AWS-EKS/kubernetes"
     file_type: file
     recurse: yes
     patterns:
