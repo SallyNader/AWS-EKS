@@ -71,7 +71,7 @@ resource "aws_security_group_rule" "private_nodes_inbound" {
   from_port                = 1025
   protocol                 = "tcp"
   security_group_id        = aws_security_group.private_worker_nodes.id
-  source_security_group_id = aws_security_group.eks_nodes.id
+  source_security_group_id = aws_security_group.eks_cluster.id
   to_port                  = 65535
   type                     = "ingress"
 }
