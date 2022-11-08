@@ -59,7 +59,7 @@ resource "aws_security_group_rule" "nodes_inbound" {
 resource "aws_security_group_rule" "private_nodes_ssh" {
   description              = "Allow public nodes to connect ssh with private nodes"
   from_port                = 22
-  protocol                 = "ssh"
+  protocol                 = "tcp"
   security_group_id        = aws_security_group.private_worker_nodes.id
   source_security_group_id = aws_security_group.eks_nodes.id
   to_port                  = 22
