@@ -61,8 +61,6 @@ resource "aws_launch_template" "private_node_template" {
     EOF
   )
 
-  vpc_security_group_ids = [aws_security_group.private_worker_nodes.id]
-
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
