@@ -7,7 +7,7 @@
   gather_facts: false
   vars:
     - status : "present"
-    - key : "~/.ssh/id_rsa.pub"
+    - key : "/home/sally/.ssh/id_rsa.pub"
   
   roles:
     - deploy-code
