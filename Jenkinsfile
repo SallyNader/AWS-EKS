@@ -11,7 +11,7 @@ pipeline {
         // SONARQUBE_URL  = 'http://localhost:9095'
         CLUSTER_NAME = 'eks-cluster'
         KEY_PAIR = '/home/sally/Downloads/ec2-ssh.pem '
-        SSH_KEY = '~/.ssh/id_rsa.pub'
+        SSH_KEY = '/home/sally/.ssh/id_rsa.pub'
         BUCKET_NAME = 's3--backend'
     }
 
