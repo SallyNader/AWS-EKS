@@ -21,7 +21,7 @@ resource "aws_security_group_rule" "nodes" {
   from_port                = 0
   protocol                 = "-1"
   security_group_id        = aws_security_group.eks_nodes.id
-  source_security_group_id = aws_security_group.eks_nodes.id
+  cidr_blocks              = ["0.0.0.0/0"]
   to_port                  = 65535
   type                     = "ingress"
 }

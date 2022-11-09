@@ -44,22 +44,7 @@ resource "aws_launch_template" "private_node_template" {
   instance_type          = var.instance_type
   key_name               = var.key_name
 
-  user_data = base64encode(<<-EOF
-      MIME-Version: 1.0
-      Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
-
-      --==MYBOUNDARY==
-      Content-Type: text/x-shellscript; charset="us-ascii"
-
-      #!/bin/bash
-      sudo mkdir /home/ec2-user/project
-
-      # Mounts nfs.
-      sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport nfs-dns:/ /home/ec2-user/project
-
-      --==MYBOUNDARY==--
-    EOF
-  )
+  user_data = base64encode("${path.module}/script.sh")
 
   block_device_mappings {
     device_name = "/dev/xvda"
