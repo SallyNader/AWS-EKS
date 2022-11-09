@@ -44,7 +44,7 @@ resource "aws_launch_template" "private_node_template" {
   instance_type          = var.instance_type
   key_name               = var.key_name
 
-  user_data = base64encode("${path.module}/script.sh")
+  user_data = base64encode("${path.module}/script.txt")
 
   block_device_mappings {
     device_name = "/dev/xvda"
